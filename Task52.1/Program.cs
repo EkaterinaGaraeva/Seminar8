@@ -42,14 +42,14 @@ void PrintArray(int[] incomingArray, string arrayName)
 
 int[] GetRowsMediana(int[,] incomingArray)
 {
-    int[] medianArray = new int[incomingArray.GetLength(0)];
-    for (int i = 0; i < incomingArray.GetLength(0); i++)
+    int[] medianArray = new int[incomingArray.GetLength(1)];
+    for (int i = 0; i < incomingArray.GetLength(1); i++)
     {
         int[] arrayToSort = GetArrayByIndex(incomingArray, i);
         PrintArray(arrayToSort, $"arrayToSort {i}");
         int[] sortedArray = SortArray(arrayToSort);
         PrintArray(sortedArray, $"sortedArray {i}");
-        int middleIndex = (int)Math.Ceiling((double)(incomingArray.GetLength(0) / 2));
+        int middleIndex = (int)Math.Ceiling((double)(incomingArray.GetLength(0) / 2.0)) - 1;
         if(incomingArray.GetLength(0) % 2 == 0)
         {
             medianArray[i] = (sortedArray[middleIndex] + sortedArray[middleIndex+1]) / 2;
@@ -60,6 +60,14 @@ int[] GetRowsMediana(int[,] incomingArray)
         }
     }
     return medianArray;
+}
+
+void LoadArray(int[,] incomingArray, int[] arrayToLoad, int index)
+{
+    for (int i = 0; i < incomingArray.GetLength(0); i++)
+    {
+        incomingArray[i, index] = arrayToLoad[i];
+    }
 }
 
 int[] GetArrayByIndex(int[,] incomingArray, int index)
@@ -98,5 +106,7 @@ int[] SortArray(int[] incomingArray)
 int[,] array = Generate2DArray(5, 5, 10);
 Print2DArray(array, "Изначальный");
 int[] medianArray = GetRowsMediana(array);
+PrintArray(medianArray, "Отсортированный");
+
 PrintArray(medianArray, "Медиана");
 
